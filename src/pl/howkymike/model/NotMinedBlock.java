@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.time.Instant;
 
 public class NotMinedBlock implements Serializable {
-    private int index;
-    private Instant timestamp;
-    private String data;
-    private String prevHash;
+    private final int index;
+    private final Instant timestamp;
+    private final String data;
+    private final String prevHash;
 
     public NotMinedBlock(int index, Instant timestamp, String data, String prevHash) {
         this.prevHash = prevHash;

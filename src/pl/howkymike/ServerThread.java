@@ -14,18 +14,15 @@ import java.net.Socket;
 // 2. say that you mined a block
 // 3. get blockchain from other nodes
 // 4. ask for a list of nodes
-public class ServerThread implements Runnable{
+public class ServerThread implements Runnable {
 
-    private final int serverPort;
     private static ServerSocket server;
 
 
     public ServerThread(int serverPort) {
-        this.serverPort = serverPort;
-
         try {
             server = new ServerSocket(serverPort);
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("could not create ServerSocket on port " + serverPort);
             throw new RuntimeException(e);
         }
@@ -34,9 +31,9 @@ public class ServerThread implements Runnable{
     @Override
     public void run() {
         // keep listening indefinitely
-        while(true) {
+        while (true) {
             System.out.println("Waiting for the client message..");
-            Socket socket = null;
+            Socket socket;
             try {
                 socket = server.accept();
             } catch (IOException e) {
@@ -45,7 +42,7 @@ public class ServerThread implements Runnable{
             }
 
             //read from socket
-            ObjectInputStream ois = null;
+            ObjectInputStream ois;
             try {
                 ois = new ObjectInputStream(socket.getInputStream());
             } catch (IOException e) {
@@ -53,7 +50,7 @@ public class ServerThread implements Runnable{
                 tryToCloseServer();
                 throw new RuntimeException(e);
             }
-            Message message = null;
+            Message message;
             try {
                 message = (Message) ois.readObject();
             } catch (IOException e) {
@@ -72,11 +69,11 @@ public class ServerThread implements Runnable{
             Message outputMessage = msgHandler.handleMessage(message);
 
             // return message to client
-            ObjectOutputStream oos = null;
+            ObjectOutputStream oos;
             try {
                 oos = new ObjectOutputStream(socket.getOutputStream());
             } catch (IOException e) {
-                System.out.println("Could not get outputstream from client.");
+                System.out.println("Could not get output stream from client.");
                 tryToCloseServer();
                 throw new RuntimeException(e);
             }

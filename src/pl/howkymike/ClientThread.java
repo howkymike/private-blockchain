@@ -37,8 +37,8 @@ public class ClientThread implements Runnable {
 
 
     private void sendMessageToAll() {
-        for(Integer port : Main.getNodePorts()) {
-            if(port.intValue() == Main.getOwnServerPort().intValue())
+        for (Integer port : Main.getNodePorts()) {
+            if (port.intValue() == Main.getOwnServerPort().intValue())
                 continue;
 
             // create a socket

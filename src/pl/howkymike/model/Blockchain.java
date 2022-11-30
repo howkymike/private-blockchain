@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Blockchain implements Serializable {
-    List<Block> blocks;
+    final List<Block> blocks;
 
     public Blockchain() {
         blocks = Collections.synchronizedList(new ArrayList<>());

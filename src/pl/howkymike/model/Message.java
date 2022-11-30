@@ -3,8 +3,8 @@ package pl.howkymike.model;
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    private MessageType messageType;
-    private Object data;
+    private final MessageType messageType;
+    private final Object data;
 
     public Message(MessageType messageType, Object data) {
         this.messageType = messageType;

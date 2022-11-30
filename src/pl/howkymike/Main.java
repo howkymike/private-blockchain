@@ -26,8 +26,8 @@ public class Main {
     public static void main(String[] args) {
         nodePorts.add(PORT_FIRST_NODE);
 
-        if(args.length != 1) {
-            if(args.length == 2) {
+        if (args.length != 1) {
+            if (args.length == 2) {
                 String blockData = args[1];
                 callBlockMine(blockData);
                 return;
@@ -37,7 +37,7 @@ public class Main {
         }
         ownServerPort = Integer.parseInt(args[0]);
 
-        if(ownServerPort != PORT_FIRST_NODE) {
+        if (ownServerPort != PORT_FIRST_NODE) {
             initNode();
         }
 
@@ -102,7 +102,7 @@ public class Main {
     }
 
     public static void addBlock(Block b) {
-        if(!blockchain.getBlocks().contains(b)) {
+        if (!blockchain.getBlocks().contains(b)) {
             blockchain.addBlock(b);
 
             Message msg = ClientMessageCreator.createMessage(MessageType.HASH_FOUND, b);
@@ -126,6 +126,7 @@ public class Main {
     public static void addNode(Integer nodePort) {
         Main.nodePorts.add(nodePort);
     }
+
     public static Integer getOwnServerPort() {
         return ownServerPort;
     }

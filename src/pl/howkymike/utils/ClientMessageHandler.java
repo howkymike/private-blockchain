@@ -22,11 +22,11 @@ public final class ClientMessageHandler {
             mineBlock(message);
             return;
         }
-        if(MessageType.GET_NODES.equals(msgType)) {
+        if (MessageType.GET_NODES.equals(msgType)) {
             getNodes(message);
             return;
         }
-        if(MessageType.JOIN_NODES.equals(msgType)) {
+        if (MessageType.JOIN_NODES.equals(msgType)) {
             printJoinNodesStatus(message);
             return;
         }
@@ -38,8 +38,8 @@ public final class ClientMessageHandler {
         Blockchain myBlockchain = Main.getBlockchain();
 
         // simple without validation
-        for(int i = 0; i < receivedBlockchain.getBlocks().size(); i++) {
-            if(myBlockchain.getBlocks().size() > i)
+        for (int i = 0; i < receivedBlockchain.getBlocks().size(); i++) {
+            if (myBlockchain.getBlocks().size() > i)
                 continue;
             myBlockchain.addBlock(receivedBlockchain.getBlocks().get(i));
         }

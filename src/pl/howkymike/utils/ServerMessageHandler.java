@@ -1,7 +1,10 @@
 package pl.howkymike.utils;
 
 import pl.howkymike.Main;
-import pl.howkymike.model.*;
+import pl.howkymike.model.Block;
+import pl.howkymike.model.Message;
+import pl.howkymike.model.MessageType;
+import pl.howkymike.model.NotMinedBlock;
 
 import java.time.Instant;
 import java.util.List;
@@ -21,10 +24,10 @@ public class ServerMessageHandler {
         if (MessageType.MINE_BLOCK.equals(msgType)) {
             return mineBlock(message);
         }
-        if(MessageType.GET_NODES.equals(msgType)) {
+        if (MessageType.GET_NODES.equals(msgType)) {
             return getNodes();
         }
-        if(MessageType.JOIN_NODES.equals(msgType)) {
+        if (MessageType.JOIN_NODES.equals(msgType)) {
             return setNewNode(message);
         }
         throw new RuntimeException("Undefined messageType: " + msgType);
@@ -37,7 +40,7 @@ public class ServerMessageHandler {
     }
 
     private Message updateBlockchainAndTerminateMiner(Message message) {
-        if(miner != null && miner.isAlive()) {
+        if (miner != null && miner.isAlive()) {
             miner.stop();
             miner = null;
         }
@@ -50,8 +53,8 @@ public class ServerMessageHandler {
         String blockData = (String) message.getData();
 
         List<Block> currentBlocks = Main.getBlockchain().getBlocks();
-        NotMinedBlock toBeMinedBlock = new NotMinedBlock(currentBlocks.size(), Instant.now(), blockData, currentBlocks.get(currentBlocks.size()-1).getCurrHash());
-        if(miner != null) {
+        NotMinedBlock toBeMinedBlock = new NotMinedBlock(currentBlocks.size(), Instant.now(), blockData, currentBlocks.get(currentBlocks.size() - 1).getCurrHash());
+        if (miner != null) {
             miner.stop();
             miner = null;
         }

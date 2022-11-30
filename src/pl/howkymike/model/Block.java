@@ -37,18 +37,20 @@ public class Block extends NotMinedBlock implements Serializable {
 
     private String calcBlockHash() {
         String hashData = getIndex() + getTimestamp().toString() + getData() + getPrevHash() + this.nonce;
-        byte[] hash = null;
+        byte[] hash;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             hash = messageDigest.digest(hashData.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(hash);
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Exception thrown : " + e);
+            throw new RuntimeException(e.getMessage());
         }
-        return bytesToHex(hash);
     }
 
     /**
      * Proof of work Mining method. It finds a hash with a @zerocount zeroes.
+     *
      * @param zeroCount number of zeroes the hash must have to be valid
      * @return the valid hash
      */
@@ -58,7 +60,7 @@ public class Block extends NotMinedBlock implements Serializable {
 
         String requiredPrefix = "0".repeat(zeroCount); //Stream.generate(() -> "0").limit(zeroCount).collect(Collectors.joining());
 
-        while(!requiredPrefix.equals(hash.substring(0,zeroCount))) {
+        while (!requiredPrefix.equals(hash.substring(0, zeroCount))) {
             this.nonce = ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE - 1); //this.nonce++;
             hash = calcBlockHash();
         }
@@ -67,6 +69,7 @@ public class Block extends NotMinedBlock implements Serializable {
 
     /**
      * Private helper class to convert bytes to hex
+     *
      * @param hash
      * @return
      */
@@ -103,9 +106,9 @@ public class Block extends NotMinedBlock implements Serializable {
     }
 
     private static String humanReadableHash(String hash) {
-        if(hash != null && hash.length() > 8) {
+        if (hash != null && hash.length() > 8) {
             int len = hash.length();
-            return hash.substring(0,4) + "..." + hash.substring(len-4,len);
+            return hash.substring(0, 4) + "..." + hash.substring(len - 4, len);
         }
         return hash;
     }
